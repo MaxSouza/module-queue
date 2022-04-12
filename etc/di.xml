@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <!-- Copyright © Caravel. All rights reserved. -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Discorgento\Queue\Api\MessageRepositoryInterface" type="Discorgento\Queue\Model\MessageRepository"/>
+    <preference for="Discorgento\Queue\Api\Data\MessageInterface" type="Discorgento\Queue\Model\Message"/>
+
     <!-- console commands -->
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
@@ -32,6 +35,15 @@
     <type name="Discorgento\Queue\Helper\Executor">
         <arguments>
             <argument name="logger" xsi:type="object">Discorgento\Queue\Logger\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="Discorgento\Queue\Model\QueueAdapterFactory">
+        <arguments>
+            <argument name="adapterPool" xsi:type="array">
+                <item name="amqp" xsi:type="string">Discorgento\Queue\Model\Adapter\Amqp</item>
+                <item name="cron" xsi:type="string">Discorgento\Queue\Model\Adapter\Cron</item>
+            </argument>
         </arguments>
     </type>
 </config>
